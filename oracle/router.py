@@ -1,4 +1,5 @@
 import json
+import logging
 
 import aioredis
 from fastapi import APIRouter
@@ -13,12 +14,22 @@ redis = aioredis.from_url(
     decode_responses=True,
 )
 
+logger = logging.getLogger(__name__)
+
 
 @router.get('/', response_model=OracleSchemaOut)
 async def get_oracle():
     """Oracle main endpoint"""
 
-    return {
+    gas = await redis.get('gas')
+
+    if gas:
+        try:
+            gas = json.loads(gas)
+        except TypeError as e:
+            logger.error(e)
+
+    data = {
         'pools': {
             'ethereum': [
                 {
@@ -55,5 +66,7 @@ async def get_oracle():
                 'token_1_supply': 'mock',
             }, ],
         },
-        'gas': json.loads(await redis.get('gas')),
+        'gas': gas,
     }
+
+    return data

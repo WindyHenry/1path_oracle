@@ -1,4 +1,4 @@
-from typing import List, Literal
+from typing import List, Literal, Optional
 
 from pydantic import BaseModel, Field
 
@@ -38,5 +38,5 @@ class GasSchemaOut(BaseModel):
 
 
 class OracleSchemaOut(BaseModel):
-    pools: PoolsSchamaOut
-    gas: GasSchemaOut
+    pools: Optional[PoolsSchamaOut]
+    gas: Optional[GasSchemaOut]

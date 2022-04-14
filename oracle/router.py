@@ -3,6 +3,7 @@ import logging
 
 import aioredis
 from fastapi import APIRouter
+
 from schemas import OracleSchemaOut
 from settings import settings
 
@@ -26,46 +27,19 @@ async def get_oracle():
     if gas:
         try:
             gas = json.loads(gas)
-        except TypeError as e:
+        except (ValueError, TypeError) as e:
+            logger.error(e)
+
+    pools = await redis.get('pools')
+
+    if pools:
+        try:
+            pools = json.loads(pools)
+        except (ValueError, TypeError) as e:
             logger.error(e)
 
     data = {
-        'pools': {
-            'ethereum': [
-                {
-                    'protocol_name': 'uniswapv2',
-                    'pair_name': 'mock',
-                    'token_0_supply': 'mock',
-                    'token_1_supply': 'mock',
-                },
-                {
-                    'protocol_name': 'uniswapv2',
-                    'pair_name': 'mock',
-                    'token_0_supply': 'mock',
-                    'token_1_supply': 'mock',
-                },
-            ],
-            'polygon': [
-                {
-                    'protocol_name': 'quickswap',
-                    'pair_name': 'mock',
-                    'token_0_supply': 'mock',
-                    'token_1_supply': 'mock',
-                },
-                {
-                    'protocol_name': 'quickswap',
-                    'pair_name': 'mock',
-                    'token_0_supply': 'mock',
-                    'token_1_supply': 'mock',
-                },
-            ],
-            'bsc': [{
-                'protocol_name': 'pancakeswap',
-                'pair_name': 'mock',
-                'token_0_supply': 'mock',
-                'token_1_supply': 'mock',
-            }, ],
-        },
+        'pools': pools,
         'gas': gas,
     }
 

@@ -32,9 +32,9 @@ class PoolsSchamaOut(BaseModel):
 
 
 class GasSchemaOut(BaseModel):
-    ethereum: float
-    polygon: float
-    bsc: float
+    ethereum: Optional[float]
+    polygon: Optional[float]
+    bsc: Optional[float]
 
 
 class OracleSchemaOut(BaseModel):

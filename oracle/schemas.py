@@ -6,6 +6,8 @@ from pydantic import BaseModel, Field
 class PairSchemaOut(BaseModel):
     protocol_name: str = Field(alias='protocolName')
     pair_name: str = Field(alias='pairName')
+    token_0: Optional[str] = Field(alias='token0')
+    token_1: Optional[str] = Field(alias='token1')
     token_0_supply: str = Field(alias='token0Supply')
     token_1_supply: str = Field(alias='token1Supply')
 

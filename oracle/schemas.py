@@ -16,22 +16,48 @@ class PairSchemaOut(BaseModel):
         allow_population_by_field_name = True
 
 
-class EthereumSchemaOut(PairSchemaOut):
+class BridgeTokenSchemaOut(BaseModel):
+    protocol_name: str = Field(alias='protocolName')
+    token_name: str = Field(alias='tokenName')
+    token_address: str = Field(alias='tokenAddress')
+    token_supply: str = Field(alias='tokenSupply')
+    date_updated: str = Field(alias='dateUpdated')
+
+    class Config:
+        allow_population_by_field_name = True
+
+
+class SwapEthereumSchemaOut(PairSchemaOut):
     protocol_name: Literal['uniswapv2'] = Field(default='uniswapv2', alias='protocolName')
 
 
-class PolygonSchemaOut(PairSchemaOut):
+class SwapPolygonSchemaOut(PairSchemaOut):
     protocol_name: Literal['quickswap'] = Field(default='quickswap', alias='protocolName')
 
 
-class BscSchemaOut(PairSchemaOut):
+class SwapBscSchemaOut(PairSchemaOut):
     protocol_name: Literal['pancakeswap'] = Field(default='pancakeswap', alias='protocolName')
 
 
+class BridgeChainSchemaOut(BridgeTokenSchemaOut):
+    protocol_name: Literal['multichain'] = Field(default='multichain', alias='protocolName')
+
+
+class SwapPoolsSchemaOut(BaseModel):
+    ethereum: List[SwapEthereumSchemaOut]
+    polygon: List[SwapPolygonSchemaOut]
+    bsc: List[SwapBscSchemaOut]
+
+
+class BridgePoolsSchemaOut(BaseModel):
+    ethereum: List[BridgeChainSchemaOut]
+    polygon: List[BridgeChainSchemaOut]
+    bsc: List[BridgeChainSchemaOut]
+
+
 class PoolsSchemaOut(BaseModel):
-    ethereum: List[EthereumSchemaOut]
-    polygon: List[PolygonSchemaOut]
-    bsc: List[BscSchemaOut]
+    swap_pools: Optional[SwapPoolsSchemaOut]
+    bridge_pools: Optional[BridgePoolsSchemaOut]
 
 
 class ChainGasSchemaOut(BaseModel):

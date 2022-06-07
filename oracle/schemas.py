@@ -8,6 +8,7 @@ class PairSchemaOut(BaseModel):
     pair_name: str = Field(alias='pairName')
     token_0: Optional[str] = Field(alias='token0')
     token_1: Optional[str] = Field(alias='token1')
+    pair_address: Optional[str] = Field(alias='pairAddress')
     token_0_supply: str = Field(alias='token0Supply')
     token_1_supply: str = Field(alias='token1Supply')
     date_updated: Optional[str] = Field(alias='dateUpdated')

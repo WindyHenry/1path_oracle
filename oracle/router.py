@@ -38,9 +38,18 @@ async def get_oracle():
         except (ValueError, TypeError) as e:
             logger.error(e)
 
+    quotes = await redis.get('quotes')
+
+    if quotes:
+        try:
+            quotes = json.loads(quotes)
+        except (ValueError, TypeError) as e:
+            logger.error(e)
+
     data = {
         'pools': pools,
         'gas': gas,
+        'quotes': quotes,
     }
 
     return data

@@ -72,6 +72,15 @@ class GasSchemaOut(BaseModel):
     bsc: Union[ChainGasSchemaOut, float, None]
 
 
+class QuotesSchemaOut(BaseModel):
+    name: str = Field(alias='tokenName')
+    value: float = Field(alias='value')
+
+    class Config:
+        allow_population_by_field_name = True
+
+
 class OracleSchemaOut(BaseModel):
     pools: Optional[PoolsSchemaOut]
     gas: Optional[GasSchemaOut]
+    quotes: Optional[List[QuotesSchemaOut]]

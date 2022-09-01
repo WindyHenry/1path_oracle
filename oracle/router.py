@@ -1,10 +1,10 @@
 import json
 import logging
+from typing import List
 
 import aioredis
-from fastapi import APIRouter
-
-from schemas import OracleSchemaOut
+from fastapi import APIRouter, HTTPException
+from schemas import OracleSchemaOut, QuotesSchemaOut
 from settings import settings
 
 router = APIRouter()
@@ -27,24 +27,27 @@ async def get_oracle():
     if gas:
         try:
             gas = json.loads(gas)
-        except (ValueError, TypeError) as e:
+        except Exception as e:
             logger.error(e)
+            return HTTPException(400, e)
 
     pools = await redis.get('pools')
 
     if pools:
         try:
             pools = json.loads(pools)
-        except (ValueError, TypeError) as e:
+        except Exception as e:
             logger.error(e)
+            return HTTPException(400, e)
 
     quotes = await redis.get('quotes')
 
     if quotes:
         try:
             quotes = json.loads(quotes)
-        except (ValueError, TypeError) as e:
+        except Exception as e:
             logger.error(e)
+            return HTTPException(400, e)
 
     data = {
         'pools': pools,
@@ -53,3 +56,19 @@ async def get_oracle():
     }
 
     return data
+
+
+@router.get('/quotes/', response_model=List[QuotesSchemaOut])
+async def get_quotes():
+    '''Get quotes endpoint'''
+
+    quotes = await redis.get('quotes')
+
+    if quotes:
+        try:
+            quotes = json.loads(quotes)
+        except Exception as e:
+            logger.error(e)
+            return HTTPException(400, e)
+
+    return quotes

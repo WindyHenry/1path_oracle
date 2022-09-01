@@ -14,7 +14,7 @@ Gets pools and gas price info from redis and serves it in specified format.
 ```
 # Redis url to shared with Oracle API redis instance (same instance, same DB required), required var
 
-REDIS_URL=redis://some-redis/0:6379
+REDIS_URL=redis://some-redis:6379/0
 
 # OpenAPI scheme path, to enable API docs.
 

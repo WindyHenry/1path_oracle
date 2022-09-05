@@ -1,6 +1,18 @@
+from enum import Enum
 from typing import List, Literal, Optional, Union
 
 from pydantic import BaseModel, Field
+
+
+class TokensEnum(str, Enum):
+    ETH = 'ETH'
+    WETH = 'WETH'
+    WBTC = 'WBTC'
+    DAI = 'DAI'
+    USDT = 'USDT'
+    USDC = 'USDC'
+    MATIC = 'MATIC'
+    BNB = 'BNB'
 
 
 class PairSchemaOut(BaseModel):
@@ -73,7 +85,7 @@ class GasSchemaOut(BaseModel):
 
 
 class QuotesSchemaOut(BaseModel):
-    name: str = Field(alias='tokenName')
+    token_name: TokensEnum = Field(alias='tokenName')
     value: float = Field(alias='value')
 
     class Config:

@@ -62,7 +62,8 @@ class PoolsSchemaOut(BaseModel):
 
 
 class ChainGasSchemaOut(BaseModel):
-    value: Optional[float]
+    gwei: Optional[float]
+    tokenPrice: Optional[float]
     date_updated: Optional[str] = Field(alias='dateUpdated')
 
 

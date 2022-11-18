@@ -1,3 +1,4 @@
+from datetime import datetime
 from enum import Enum
 from typing import List, Literal, Optional, Union
 
@@ -23,7 +24,7 @@ class PairSchemaOut(BaseModel):
     pair_address: Optional[str] = Field(alias='pairAddress')
     token_0_supply: str = Field(alias='token0Supply')
     token_1_supply: str = Field(alias='token1Supply')
-    date_updated: Optional[str] = Field(alias='dateUpdated')
+    date_updated: Optional[datetime] = Field(alias='dateUpdated')
 
     class Config:
         allow_population_by_field_name = True
@@ -34,7 +35,7 @@ class BridgeTokenSchemaOut(BaseModel):
     token_name: str = Field(alias='tokenName')
     token_address: str = Field(alias='tokenAddress')
     token_supply: str = Field(alias='tokenSupply')
-    date_updated: str = Field(alias='dateUpdated')
+    date_updated: Optional[datetime] = Field(alias='dateUpdated')
 
     class Config:
         allow_population_by_field_name = True
@@ -78,6 +79,9 @@ class ChainGasSchemaOut(BaseModel):
     tokenPrice: Optional[float]
     date_updated: Optional[str] = Field(alias='dateUpdated')
 
+    class Config:
+        allow_population_by_field_name = True
+
 
 class GasSchemaOut(BaseModel):
     ethereum: Union[ChainGasSchemaOut, float, None]
@@ -88,6 +92,7 @@ class GasSchemaOut(BaseModel):
 class QuotesSchemaOut(BaseModel):
     token_name: TokensEnum = Field(alias='tokenName')
     value: float = Field(alias='value')
+    date_updated: Optional[datetime] = Field(alias='dateUpdated')
 
     class Config:
         allow_population_by_field_name = True
@@ -97,3 +102,6 @@ class OracleSchemaOut(BaseModel):
     pools: Optional[PoolsSchemaOut]
     gas: Optional[GasSchemaOut]
     quotes: Optional[List[QuotesSchemaOut]]
+
+    class Config:
+        allow_population_by_field_name = True

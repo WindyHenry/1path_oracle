@@ -26,6 +26,15 @@ class BridgeTokenSchemaOut(BaseModel):
 
     class Config:
         allow_population_by_field_name = True
+        
+class AnyBridgeSchemaOut(BaseModel):
+    protocol_name: str = Field(alias='protocolName')
+    pair_address: str = Field(alias='pair_address')
+    token_supply: str = Field(alias='token_supply')
+    date_updated: str = Field(alias='dateUpdated')
+
+    class Config:
+        allow_population_by_field_name = True
 
 
 class SwapEthereumSchemaOut(PairSchemaOut):
@@ -42,6 +51,10 @@ class SwapBscSchemaOut(PairSchemaOut):
 
 class BridgeChainSchemaOut(BridgeTokenSchemaOut):
     protocol_name: Literal['multichain'] = Field(default='multichain', alias='protocolName')
+        
+        
+class AnyBridgeChainSchemaOut(AnyBridgeSchemaOut):
+    protocol_name: Literal['symbiosis'] = Field(default='symbiosis', alias='protocolName')
 
 
 class SwapPoolsSchemaOut(BaseModel):
@@ -54,6 +67,9 @@ class BridgePoolsSchemaOut(BaseModel):
     ethereum: List[BridgeChainSchemaOut]
     polygon: List[BridgeChainSchemaOut]
     bsc: List[BridgeChainSchemaOut]
+    bsc_ethereum: List[AnyBridgeChainSchemaOut]
+    polygon_ethereum: List[AnyBridgeChainSchemaOut]
+    polygon_bsc: List[AnyBridgeChainSchemaOut]
 
 
 class PoolsSchemaOut(BaseModel):

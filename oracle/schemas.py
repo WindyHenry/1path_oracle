@@ -30,7 +30,10 @@ class BridgeTokenSchemaOut(BaseModel):
 class AnyBridgeSchemaOut(BaseModel):
     protocol_name: str = Field(alias='protocolName')
     pair_address: str = Field(alias='pair_address')
-    token_supply: str = Field(alias='token_supply')
+    token_0: str = Field(alias='token0')
+    token_1: str = Field(alias='token1')
+    token_0_supply: str = Field(alias='token0Supply')
+    token_1_supply: str = Field(alias='token1Supply')
     date_updated: str = Field(alias='dateUpdated')
 
     class Config:

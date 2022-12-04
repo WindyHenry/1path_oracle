@@ -29,6 +29,7 @@ class BridgeTokenSchemaOut(BaseModel):
         
 class AnyBridgeSchemaOut(BaseModel):
     protocol_name: str = Field(alias='protocolName')
+    token_name: str = Field(alias='tokenName')
     pair_address: str = Field(alias='pair_address')
     token_0: str = Field(alias='token0')
     token_1: str = Field(alias='token1')
@@ -41,7 +42,7 @@ class AnyBridgeSchemaOut(BaseModel):
 
 
 class SwapEthereumSchemaOut(PairSchemaOut):
-    protocol_name: Literal['uniswapv2'] = Field(default='uniswapv2', alias='protocolName')
+    protocol_name: Literal['uniswapv2', 'sushiswap'] = Field(default='uniswapv2', alias='protocolName')
 
 
 class SwapPolygonSchemaOut(PairSchemaOut):

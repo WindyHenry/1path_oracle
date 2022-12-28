@@ -114,8 +114,10 @@ class PoolLiquiditySchemaOut(BaseModel):
     pair_address: str = Field(alias='pairAddress')
     ticks_amount: int = Field(alias='ticksAmount')
     fi: int = Field(alias='fi')
-    date_updated: Optional[str] = Field(alias='dateUpdated')
-    ticks: Optional[Dict] = Field(alias='ticks')
+    ticks_updated: Optional[str] = Field(alias='ticksUpdated')
+    ticks: Optional[Dict[int, int]] = Field(alias='ticks')
+    current_tick_updated: Optional[str] = Field(alias='currentTickUpdated')
+    current_tick: int = Field(alias='currentTick')
 
     class Config:
         allow_population_by_field_name = True

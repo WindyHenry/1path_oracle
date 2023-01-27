@@ -124,7 +124,7 @@ class PoolLiquiditySchemaOut(BaseModel):
         
 
 class LiquiditySchemaOut(BaseModel):
-    liquidity: List[PoolLiquiditySchemaOut]
+    liquidity: Dict[str, List[PoolLiquiditySchemaOut]]
     
     
     
